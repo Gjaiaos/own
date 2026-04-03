@@ -129,16 +129,16 @@ body{
     filter:blur(1px);
 }
 
-/* ❤️ CHỮ RƠI */
+/* ❤️ CHỮ RƠI 1 DÒNG, cùng size */
 .love-text{
     position:absolute;
-    top:-30px;
-    font-size:20px;
+    top:50px; /* cố định dòng */
+    font-size:20px; /* cùng size */
     font-weight:bold;
-    opacity:0.8;
+    opacity:0.9;
     animation:fall linear forwards;
     pointer-events:none;
-    color:#fff; /* ✅ chữ màu trắng */
+    color:#fff;
 }
 
 @keyframes floatUp{
@@ -264,17 +264,26 @@ setInterval(()=>{
     setTimeout(()=>h.remove(),6000);
 },300);
 
-// 💌 CHỮ RƠI NGẪU NHIÊN MÀU TRẮNG
+// 💌 CHỮ RƠI NGẪU NHIÊN 1 DÒNG
 const loveMessages=["Anh yêu em 💖","Em yêu anh 💗"];
+const usedX=[]; // lưu X đã dùng để không trùng
 setInterval(()=>{
     let t=document.createElement("div");
     t.className="love-text";
     t.innerHTML=loveMessages[Math.floor(Math.random()*loveMessages.length)];
-    t.style.left=Math.random()*85+"%";
-    t.style.fontSize=(16+Math.random()*12)+"px";
-    t.style.animationDuration=(4+Math.random()*3)+"s";
+
+    // chọn X ngẫu nhiên, không trùng
+    let x;
+    do{x=Math.floor(Math.random()*85);} 
+    while(usedX.includes(x));
+    usedX.push(x);
+    if(usedX.length>5) usedX.shift(); // tối đa 5 chữ cùng lúc
+
+    t.style.left=x+"%";
+
+    t.style.animationDuration="5s"; // cùng tốc độ
     app.appendChild(t);
-    setTimeout(()=>t.remove(),7000);
+    setTimeout(()=>t.remove(),5000);
 },600);
 
 // CAPTION
